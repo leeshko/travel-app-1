@@ -9,7 +9,11 @@ app.use(express.urlencoded({ limit: '1mb', extended: true }));
 
 app.use('/api/auth', require('./routes/auth.routes'));
 
-const PORT = config.get('port') || 5000;
+const PORT = config.get('port') || 8080;
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('../build'));
+}
 
 const start = async () => {
   try {
