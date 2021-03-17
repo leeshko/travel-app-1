@@ -3,8 +3,7 @@ import {
   YMaps,
   Map,
   Placemark,
-  FullscreenControl,
-  TypeSelector,
+  FullscreenControl
 } from "react-yandex-maps";
 import st from "./map.module.css";
 
@@ -52,7 +51,6 @@ const MapWidget = ({ coordinates, region }) => {
         >
           <Placemark geometry={coordinates} />
           <FullscreenControl />
-          <TypeSelector options={{ float: "right" }} />
         </Map>
       </YMaps>
     </div>
