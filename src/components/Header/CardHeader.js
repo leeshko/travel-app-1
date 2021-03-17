@@ -3,14 +3,11 @@ import s from "./header.module.css";
 import { Link } from "react-router-dom";
 import useParallax from "../../custom-hooks/useParallax";
 
-import leftArrowLogo from "../../assets/left_arrow.svg";
-import rightArrowLogo from "../../assets/right_arrow.svg";
 import travelAppLogo from "../../assets/travel_app_logo.png";
 
 import { useContext } from "react";
 import TravelAppContext from "../context/context";
 import { handleLanguageChange } from "../handlers/handlers";
-
 
 function CardHeader() {
   const { language, dispatch } = useContext(TravelAppContext);

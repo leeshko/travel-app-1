@@ -3,8 +3,7 @@ import {
   YMaps,
   Map,
   Placemark,
-  FullscreenControl,
-  TypeSelector,
+  FullscreenControl
 } from "react-yandex-maps";
 import st from "./map.module.css";
 
@@ -17,11 +16,7 @@ const MapWidget = ({ coordinates, region }) => {
     РУС: "ru_RU",
     EN: "en_US",
   };
-  const [lang, setLang] = React.useState(`${languages[language] || "tr_TR"}`);
-
-  React.useEffect(() => {
-    setLang(`${languages[language] || "tr_TR"}`);
-  }, [language]);
+  let lang = `${languages[language] || "tr_TR"}`;
 
   const getRegions = (ymaps) => {
     if (mapRef && mapRef.current) {
@@ -52,7 +47,6 @@ const MapWidget = ({ coordinates, region }) => {
         >
           <Placemark geometry={coordinates} />
           <FullscreenControl />
-          <TypeSelector options={{ float: "right" }} />
         </Map>
       </YMaps>
     </div>
