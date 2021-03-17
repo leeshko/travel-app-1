@@ -17,6 +17,7 @@ const PhotoVideo = ({ pictures, video }) => {
       </div>
       <div className={s.video_player}>
         <iframe
+          title="Video about country"
           width="100%"
           height="335"
           src={video}

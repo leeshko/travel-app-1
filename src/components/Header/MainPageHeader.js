@@ -1,9 +1,7 @@
-import React, { useRef, useEffect, useContext, useState } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import useParallax from "../../custom-hooks/useParallax";
 import s from "./header.module.css";
 
-import leftArrowLogo from "../../assets/left_arrow.svg";
-import rightArrowLogo from "../../assets/right_arrow.svg";
 import searchLogo from "../../assets/search_icon.svg";
 import clearLogo from "../../assets/clear_icon.svg";
 import travelAppLogo from "../../assets/travel_app_logo.png";
@@ -30,7 +28,7 @@ function MainPageHeader() {
         handleSearchTextSubmit(event, dispatch);
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <header style={currentBgPosition}>

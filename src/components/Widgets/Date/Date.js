@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import s from "./date.module.css";
 import TravelAppContext from "../../context/context";
 const Dat = () => {
-  const { language, utc, area, cityTime, lang } = React.useContext(
-    TravelAppContext
-  );
+  const { language, area, cityTime, lang } = React.useContext(TravelAppContext);
 
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    timeZone: `${area}/${cityTime}`,
-  };
+  const options = React.useMemo(() => {
+    return {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: `${area}/${cityTime}`,
+    };
+  }, [area, cityTime]);
 
   const [time, setTime] = useState(
     new Date().toLocaleTimeString(lang, options)
@@ -24,7 +24,7 @@ const Dat = () => {
     };
     const interval = setInterval(intervalFunction, 1000);
     return () => clearInterval(interval);
-  }, [language]);
+  }, [language, lang, options]);
 
   return (
     <div className={s.wrapper}>

@@ -16,11 +16,7 @@ const MapWidget = ({ coordinates, region }) => {
     РУС: "ru_RU",
     EN: "en_US",
   };
-  const [lang, setLang] = React.useState(`${languages[language] || "tr_TR"}`);
-
-  React.useEffect(() => {
-    setLang(`${languages[language] || "tr_TR"}`);
-  }, [language]);
+  let lang = `${languages[language] || "tr_TR"}`;
 
   const getRegions = (ymaps) => {
     if (mapRef && mapRef.current) {

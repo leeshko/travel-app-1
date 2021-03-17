@@ -3,15 +3,11 @@ import s from "./header.module.css";
 import { Link } from "react-router-dom";
 import useParallax from "../../custom-hooks/useParallax";
 
-import leftArrowLogo from "../../assets/left_arrow.svg";
-import rightArrowLogo from "../../assets/right_arrow.svg";
 import travelAppLogo from "../../assets/travel_app_logo.png";
 
 import { useContext } from "react";
 import TravelAppContext from "../context/context";
 import { handleLanguageChange } from "../handlers/handlers";
-
-// import { removeInterval, intervalFunction } from "../Widgets/Date/Date";
 
 function CardHeader() {
   const { language, dispatch } = useContext(TravelAppContext);
@@ -21,10 +17,7 @@ function CardHeader() {
     <header className={s.page_header} style={currentBgPosition}>
       <div className={`${s.rowOne}`}>
         <span>
-          <Link
-            to="/"
-            // onClick={(event) => removeInterval(event, intervalFunction)}
-          >
+          <Link to="/">
             <img src={travelAppLogo} alt="travel-logo" />
           </Link>
         </span>
