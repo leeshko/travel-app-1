@@ -1,15 +1,14 @@
-import React, { useRef, useEffect, useContext, useState } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import useParallax from "../../custom-hooks/useParallax";
 import s from "./header.module.css";
 
-import leftArrowLogo from "../../assets/left_arrow.svg";
-import rightArrowLogo from "../../assets/right_arrow.svg";
 import searchLogo from "../../assets/search_icon.svg";
 import clearLogo from "../../assets/clear_icon.svg";
 import travelAppLogo from "../../assets/travel_app_logo.png";
 
 import TravelAppContext from "../context/context";
-
+import Auth from "../Auth/Auth";
+import { useAuthContext } from "../context/auth-context";
 import {
   handleLanguageChange,
   handleSearchTextChange,
@@ -20,9 +19,11 @@ import {
 function MainPageHeader() {
   const inputRef = useRef(null);
   const currentBgPosition = useParallax();
-  const { searchText, language, dispatch, showModal, modalType } = useContext(
+  const { isAuthenticated, userProfile, logout } = useAuthContext();
+  const { searchText, language, dispatch, showModal } = useContext(
     TravelAppContext
   );
+
   useEffect(() => {
     inputRef.current.focus();
     inputRef.current.addEventListener("keydown", (event) => {
@@ -30,52 +31,13 @@ function MainPageHeader() {
         handleSearchTextSubmit(event, dispatch);
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   return (
     <header style={currentBgPosition}>
-      {showModal && (
-        <div className={s.modal}>
-          <div className={s.subscriptionForm}>
-            <h1>
-              {`${modalType === "register" ? "Registration Form" : "Login"}`}
-            </h1>
-            <form action="">
-              {modalType === "register" && (
-                <input type="text" placeholder="John Smith"></input>
-              )}
-              <input
-                type="email"
-                name="email"
-                placeholder=" johnsmith@gmail.com"
-              />
-              <input type="password" name="password" placeholder=" ********" />
-              {modalType === "register" && (
-                <input
-                  type="file"
-                  name="photo"
-                  style={{ cursor: "pointer" }}
-                  accept="image/*"
-                />
-              )}
-              <div className={s.buttons}>
-                <button type="submit">{`${
-                  modalType === "register" ? "Register" : "Logn in"
-                }`}</button>
-                <button
-                  style={{ background: "rgba(250, 19, 65, 0.932)" }}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    dispatch({ type: "CLOSE_MODAL" });
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {showModal && <Auth />}
+      
       <div className={s.rowOne}>
         <img src={travelAppLogo} alt="travel-logo" />
         <div className={s.headerButtons}>
@@ -91,34 +53,62 @@ function MainPageHeader() {
             <option value="РУС">РУС</option>
             <option value="TÜR">TÜR</option>
           </select>
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              dispatch({ type: "OPEN_MODAL", paylod: "register" });
-            }}
-          >{`${
-            language === "EN"
-              ? "Register"
-              : language === "РУС"
-              ? "Регистрация"
-              : "Kayıt ol"
-          }`}</button>
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              dispatch({ type: "OPEN_MODAL", paylod: "signIn" });
-            }}
-          >{`${
-            language === "EN"
-              ? "Sign in"
-              : language === "РУС"
-              ? "Войти"
-              : "Oturum aç"
-          }`}</button>
         </div>
       </div>
 
+      <div className={s.auth}>
+        {!isAuthenticated && 
+          <> 
+            <div
+              className={s.auth_btn}
+              onClick={() => {
+                dispatch({ type: "OPEN_MODAL", paylod: "register" });
+              }}
+            >{`${
+              language === "EN"
+                ? "register"
+                : language === "РУС"
+                ? "регистрация"
+                : "kayıt ol"
+            }`}</div>
+            <div
+              className={s.auth_btn}
+              onClick={() => {
+                dispatch({ type: "OPEN_MODAL", paylod: "signIn" });
+              }}
+            >{
+              language === "EN"
+                ? "sign in"
+                : language === "РУС"
+                ? "войти"
+                : "oturum aç"
+            }</div>
+          </>}
+        {isAuthenticated && 
+          <>
+            <div className={s.user_name}>
+              {userProfile.userName}
+            </div>
+            <div className={s.avatar_wrap}>
+              <img src={userProfile.avatar} alt='avatar' />
+            </div>
+            <div
+              className={s.auth_btn}
+              onClick={() => {
+                logout();
+              }}
+            >
+              {language === "EN"
+                ? "log out"
+                : language === "РУС"
+                ? "выйти"
+                : "çıkış yap"
+            }</div>
+          </>}
+      </div>
+      
       <div className={s.rowTwo} />
+
       <div className={s.rowThree}>
         <button
           onClick={(event) => {
@@ -138,7 +128,7 @@ function MainPageHeader() {
               ? "Italy , Rome"
               : language === "РУС"
               ? "Италия , Рим"
-              : "İtalya , Roma"
+              : "İtalya , Roma" 
           }`}
           ref={inputRef}
           value={searchText}

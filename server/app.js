@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json({ extended: true, limit: '1mb' }));
 app.use(express.urlencoded({ limit: '1mb', extended: true }));
 
-app.use('/auth', require('./routes/auth.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
 
 const PORT = config.get('port') || 5000;
 

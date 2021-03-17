@@ -85,7 +85,6 @@ header {
   min-height: 26px;
   width: 85%;
   border-radius: 10px;
-
   outline: none;
   border: none;
   text-align: center;
@@ -107,7 +106,6 @@ header {
 
 @media (max-width: 600px) {
   header {
-    height: 30vh;
     margin-bottom: 4vh;
   }
   .page_header {
@@ -123,67 +121,61 @@ header {
     width: 80%;
   }
 }
-.modal {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.473);
-  z-index: 1;
-}
-.subscriptionForm {
-  position: fixed;
-  top: 5vh;
-  right: 1vw;
-  left: 1vw;
-  min-width: 320px;
-  background: gainsboro;
-  z-index: 2;
-  margin: 0 auto;
-  width: 80vw;
-  height: 90vh;
-  text-align: center;
+
+.auth {
+  position: absolute;
+  right: 30px;
+  top: 70px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+}
+
+.avatar_wrap {
+  display: flex;
   justify-content: center;
-  background: linear-gradient(35deg, #ccffff, #ffcccc);
+
+  overflow: hidden;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
 }
-.subscriptionForm input {
-  display: block;
-  margin: 40px auto;
-  border-radius: 7px;
-  border: inherit;
-}
-.subscriptionForm button {
-  background: khaki;
-  border: inherit;
+
+.auth_btn {
   cursor: pointer;
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px;
-  background: rgba(35, 185, 29, 0.932);
+  font-size: 15px;
+  text-decoration: underline;
+  color: #dddddd;
+  transition: 0.3s;
+  margin-left: 7px;
 }
-.headerButtons {
-  display: flex;
-  flex-direction: column;
+.auth_btn:hover {
+  color: black;
 }
-.headerButtons button {
-  margin-top: 10px;
-  margin-right: 10px;
-  width: 100px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-radius: 6px;
-  border: none;
-  background: black;
-  color: #ffffff;
-  cursor: pointer;
+
+.user_name {
+  font-size: 15px;
+  color: #dddddd;
+  transition: 0.3s;
 }
+
+.auth_btn:first-child {
+  margin-right: 8px;
+}
+
 .buttons {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 480px) {
+  .auth {
+    flex-direction: column;
+    top: 20px;
+    right: 17px;
+  }
+}
+
 @media (max-width: 576px) {
   .subscriptionForm {
     width: 96vw;
@@ -192,6 +184,14 @@ header {
     left: 0;
     top: 0;
     margin: 0 auto;
+  }
+
+  .user_name,
+  .auth_btn {
+    color: black;
+  }
+  .auth_btn:hover {
+    color: #dddddd;
   }
 }
 

@@ -26,30 +26,29 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        message: 'incorrect registration data'
+        message: 'checkInputs'
       });
     }
 
-    const { email, password, avatar } = req.body;
+    const { email, password, avatar, name } = req.body;
 
     const candidate = await User.findOne({ email });
     if (candidate) {
-      res.status(400).json({ message: 'such user is already registered' });
+      res.status(400).json({ message: 'exist' });
     }
 
     const passwordHashed = await bcrypt.hash(password, 8);
     const { secure_url } = await cloudinary.uploader.upload(avatar);
-    const user = new User({ email, password: passwordHashed, avatarUrl: secure_url });
+    const user = new User({ email, password: passwordHashed, avatarUrl: secure_url, name });
 
     await user.save();
     res.status(201).json({ 
-      message: 'user has been created', 
+      message: 'regDone', 
       secure_url,  
     });
     
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'server error' })
+    res.status(500).json({ message: 'servErr' })
   }
 });
 
@@ -64,7 +63,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        message: 'incorrect email or password'
+        message: 'checkData'
       });
     }
 
@@ -72,12 +71,12 @@ router.post(
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'user is not found' });
+      return res.status(400).json({ message: 'checkData' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: 'incorrect password' });
+      return res.status(401).json({ message: 'checkData' });
     }
 
     const token = jwt.sign(
@@ -86,11 +85,14 @@ router.post(
       { expiresIn: '1h' },
     );
 
-    const profile = { avatar: user.avatarUrl, userName: user.userName };
-    res.json({ token, userId: user.id, userProfile: profile });
+    const profile = { 
+      avatar: user.avatarUrl, 
+      userName: user.name,
+    };
+    res.json({ token, userId: user.id, userProfile: profile, message: 'logDone' });
     
   } catch (error) {
-    res.status(500).json({ message: 'server error' })
+    res.status(500).json({ message: 'servErr' })
   }
 });
 

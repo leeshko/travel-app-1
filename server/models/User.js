@@ -12,10 +12,9 @@ const schema = new Schema({
     required: true,
   },
 
-  userName: {
+  name: {
     type: String,
     required: true,
-    default: 'anonymous'
   },
 
   avatarUrl: {
