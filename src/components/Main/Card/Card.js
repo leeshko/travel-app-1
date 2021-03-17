@@ -32,24 +32,13 @@ const Card = ({ imgUrl, country, capital }) => {
               language === "EN"
                 ? `Read more about ${country}!`
                 : language === "РУС"
-                ? `Читать больше про ${country}!`
+                ? `Читать больше о стране!`
                 : `${country} 
 hakkında daha fazlasını oku!`
             }`}</h2>
           </Link>
         </div>
       </div>
-      {/* <div className={s.back}>
-        <Link
-          to="/country"
-          className={s.link}
-          onClick={() => {
-            dispatch({ type: "SET_COUNTRY_TO_DISPLAY", payload: country });
-          }}
-        >
-          <h2>click on me!</h2>
-        </Link>
-      </div> */}
     </div>
   );
 };
